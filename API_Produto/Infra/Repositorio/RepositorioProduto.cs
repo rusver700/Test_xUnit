@@ -73,6 +73,14 @@ namespace API_Produto.Infra.Repositorio
                     Valor= 300.00m,
                     Quantidade=1,
                     NomeProduto= "Contatora",
+                } ,
+                new Produto
+                {
+                    Id = 9,
+                    Data = new DateTime(2023, 03,23),
+                    Valor= 900.00m,
+                    Quantidade=1,
+                    NomeProduto= "Cabo 50mm",
                 }
             };
         }

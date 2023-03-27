@@ -28,6 +28,7 @@ namespace API_Produto_TestesUnitarios.Infra.Repositorio
             Assert.Equal("SoftStart", result[5].NomeProduto);
             Assert.Equal("Sensor", result[6].NomeProduto);
             Assert.Equal("Contatora", result[7].NomeProduto);
+            Assert.Equal("Cabo 50mm", result[8].NomeProduto);
 
             Assert.NotNull( result[0].NomeProduto);
             Assert.NotNull( result[1].NomeProduto);
@@ -37,6 +38,7 @@ namespace API_Produto_TestesUnitarios.Infra.Repositorio
             Assert.NotNull( result[5].NomeProduto);
             Assert.NotNull( result[6].NomeProduto);
             Assert.NotNull( result[7].NomeProduto);
+            Assert.NotNull( result[8].NomeProduto);
 
         }
         [Fact]
