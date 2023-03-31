@@ -66,6 +66,7 @@ namespace API_Produto_TestesUnitarios.Dominio.Servicos
         {
             //Arrange
             var data = new DateTime(2023, 02, 10);
+            string message = $"Buscando produto no Banco de Dados com a data: {data}";
 
             //Action
             var result = _mediaVendasServico.CalcularMediaMensal(data);
@@ -77,7 +78,7 @@ namespace API_Produto_TestesUnitarios.Dominio.Servicos
                          x => x.Log(
                              It.Is<LogLevel>(l => l == LogLevel.Information),
                              It.IsAny<EventId>(),
-                             It.Is<It.IsAnyType>((v, t) => v.ToString() == $"Buscando produto no Banco de Dados com a data : {data}"),
+                             It.Is<It.IsAnyType>((v, t) => v.ToString() ==  message),
                              It.IsAny<Exception>(),
                              It.Is<Func<It.IsAnyType, Exception?, string>>((v, t) => true)), Times.Once());
             _logger.Verify(
@@ -99,7 +100,7 @@ namespace API_Produto_TestesUnitarios.Dominio.Servicos
             //Action
 
             //Assert
-            Assert.Throws<Exception>(() => _mediaVendasServico.CalcularMediaMensal(data));
+            Assert.Throws<ArgumentException>(() => _mediaVendasServico.CalcularMediaMensal(data));
             _mockRepositorioProduto.Verify(m => m.BuscarProdutos(), Times.Once());
             _mockRepositorioProduto.Verify(m => m.BuscarProdutos(), Times.Exactly(1));
             _logger.Verify(
@@ -131,7 +132,7 @@ namespace API_Produto_TestesUnitarios.Dominio.Servicos
                         x => x.Log(
                             It.Is<LogLevel>(l => l == LogLevel.Information),
                             It.IsAny<EventId>(),
-                            It.Is<It.IsAnyType>((v, t) => v.ToString() == $"Buscando produto no Banco de Dados com a data : {dataFixture.Data}"),
+                            It.Is<It.IsAnyType>((v, t) => v.ToString() == $"Buscando produto no Banco de Dados com a data: {dataFixture.Data}"),
                             It.IsAny<Exception>(),
                             It.Is<Func<It.IsAnyType, Exception?, string>>((v, t) => true)), Times.Once());
         }
@@ -145,7 +146,7 @@ namespace API_Produto_TestesUnitarios.Dominio.Servicos
             //Action
 
             //Assert
-            Assert.Throws<Exception>(() => _mediaVendasServico.CalcularMediaMensal(fixture.Create<Produto>().Data));
+            Assert.Throws<ArgumentException>(() => _mediaVendasServico.CalcularMediaMensal(fixture.Create<Produto>().Data));
         }
     }
 }

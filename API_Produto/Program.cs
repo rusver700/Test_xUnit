@@ -4,39 +4,43 @@ using API_Produto.Infra.Repositorio;
 using Microsoft.OpenApi.Models;
 using System.Diagnostics.CodeAnalysis;
 
-internal class Program
+namespace API_Produto
 {
-    [ExcludeFromCodeCoverage]
-
-    private static void Main(string[] args)
+    internal static class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
+        [ExcludeFromCodeCoverage]
 
-        builder.Services.AddSwaggerGen(c =>
+        private static void Main(string[] args)
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api_Produto", Version = "v1.0" });
-        });
+            var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
 
-        builder.Services.AddScoped<IRepositorioProduto, RepositorioProduto>();
-        builder.Services.AddScoped<IQuantidadeVendasServico, QuantidadeVendasServico>();
-        builder.Services.AddScoped<IMediaVendasServico, MediaVendasServico>();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api_Produto", Version = "v1.0" });
+            });
 
-        var app = builder.Build();
+            builder.Services.AddScoped<IRepositorioProduto, RepositorioProduto>();
+            builder.Services.AddScoped<IQuantidadeVendasServico, QuantidadeVendasServico>();
+            builder.Services.AddScoped<IMediaVendasServico, MediaVendasServico>();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
         }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-
-        app.Run();
     }
 }
+
